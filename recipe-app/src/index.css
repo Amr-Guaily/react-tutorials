@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Ubuntu', sans-serif;
+}
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+/* GLOBAL CSS */
+.grid-system {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 4rem 0;
+}
+.card {
+  border-radius: 12px;
+  min-height: 220px;
+  overflow: hidden;
+  display: block;
+  position: relative;
+}
+.card::before {
+  position: absolute;
+  content: '';
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+.card img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+.card .name {
+  position: absolute;
+  bottom: 10%;
+  text-align: center;
+  width: 100%;
+  color: #fff;
+  padding: 0 10px;
+  z-index: 3;
+}
+
+/* NavBar CSS */
+nav {
+  margin: 3rem 0;
+  font-family: 'Lobster Two', cursive;
+}
+.logo {
+  text-decoration: none;
+  color: #000;
+  display: flex;
+  align-items: center;
+}
+.logo svg {
+  font-size: 1.75rem;
+  margin-right: 5px;
+}
+
+/* Search CSS */
+.form-control {
+  width: 80%;
+  margin: 3rem auto;
+  position: relative;
+  color: #fdfdfd;
+}
+.form-control input {
+  width: 100%;
+  outline: none;
+  border: none;
+  background: linear-gradient(35deg, #494949, #313131);
+  padding: 0.5rem 2.5rem;
+  border-radius: 12px;
+  font-size: 1.5rem;
+  color: inherit;
+}
+.form-control svg {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 10px;
+  font-size: 1.25rem;
+}
+
+/* Categories CSS */
+.categories-list {
+  display: flex;
+  justify-content: center;
+  margin: 3rem auto 4rem;
+}
+.categories-list a {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  background: linear-gradient(35deg, #494949, #313131);
+  color: #fdfdfd;
+  margin: 0 7px;
+  border-radius: 50%;
+}
+.categories-list a h6 {
+  margin-top: 5px;
+}
+.categories-list a.active {
+  background: linear-gradient(to right, #f27121, #e94057);
+}
+
+/* Carousel CSS */
+.carousel {
+  margin: 4rem 0;
+}
+.carousel .title {
+  margin-bottom: 1rem;
+}
+
+/* Details CSS */
+.details {
+  display: flex;
+  align-items: flex-start;
+  margin: 4rem 0;
+}
+.left-side {
+  flex-basis: 40%;
+  margin-right: 45px;
+}
+.left-side img {
+  max-width: 100%;
+  margin-top: 20px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+.right-side {
+  flex: 1;
+}
+.right-side button {
+  border: 2px solid #333;
+  background-color: transparent;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+.right-side button.active {
+  background: linear-gradient(35deg, #494949, #313131);
+  color: #fff;
+}
+.right-side button:first-child {
+  margin-right: 15px;
+}
+.instructions > p {
+  margin-bottom: 20px;
+  line-height: 24px;
+  font-size: 1.1rem;
+  text-align: justify;
+  text-justify: inter-word;
+}
+.instructions p > a {
+  color: #333;
+}
+.ingredients > li {
+  margin: 10px 0;
+  list-style: none;
+}
+
+/* Responsive Details */
+@media (max-width: 768px) {
+  .details {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .left-side {
+    margin: 50px auto;
+  }
+  .right-side {
+    text-align: center;
+  }
+}
