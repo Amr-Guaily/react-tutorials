@@ -4,83 +4,68 @@ import React, { useEffect, useState } from 'react';
 import Die from './components/Die';
 
 const App = () => {
-  const [dies, setDice] = useState(allNewDice());
-  const [tenzies, setTenzies] = useState(false);
+  const [dies, setDies] = useState(diesGenerator());
   const [counter, setCounter] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
 
-  useEffect(() => {
-    // Check the dice array for these winning conditions:
-    // 1- Check all dice are held
-    const allIsHeld = dies.every((die) => die.isHeld === true);
-    // 2- check all dice have the same value?
-    // hint: if all hve the same value..then i could pick one the dice,
-    // and check all of them to see that they have that same value.
-    const firstValue = dies[0].value;
-    const allTheSame = dies.every((die) => die.value === firstValue);
-    if (allIsHeld && allTheSame) {
-      setTenzies(true);
-    }
-  }, [dies]);
+  useEffect(gameOverHandler, [dies]);
 
-  function randomDieValue() {
-    return Math.ceil(Math.random() * 6);
-  }
-
-  function generateNewDie() {
-    return {
+  function generateDie() {
+    const die = {
       id: nanoid(),
-      isHeld: false,
-      value: randomDieValue(),
+      value: Math.floor(Math.random() * 7),
+      isHeld: false
     };
+    return die;
   }
+  function diesGenerator() {
+    const dies = [];
 
-  function allNewDice() {
-    const allDice = [];
     for (let i = 0; i < 10; i++) {
-      allDice.push(generateNewDie());
+      const die = generateDie();
+      dies.push(die);
     }
-    return allDice;
+    return dies;
   }
 
-  function rollDice() {
-    // setDice(allNewDice());
-    if (!tenzies) {
-      setDice((prevDice) =>
-        prevDice.map((die) => {
-          return die.isHeld ? die : generateNewDie();
-        })
-      );
-      setCounter((prevCount) => prevCount + 1);
-    } else {
-      setDice(allNewDice());
-      setTenzies(false);
+  function heldHandler(id) {
+    setDies(() => dies.map(die => die.id == id ? { ...die, isHeld: true } : die));
+  }
+
+  function rollHandler() {
+    if (gameOver) {
+      setGameOver(false);
       setCounter(0);
+      setDies(diesGenerator());
+    } else {
+      const newDies = dies.map(die => !die.isHeld ? generateDie() : die);
+      setDies(newDies);
+      setCounter((prev) => prev + 1);
     }
   }
 
-  function holdDice(dieId) {
-    setDice((prevDice) =>
-      prevDice.map((die) => {
-        return die.id === dieId ? { ...die, isHeld: !die.isHeld } : die;
-      })
-    );
+  function gameOverHandler() {
+    const allIsHeld = dies.every((die) => die.isHeld == true);
+
+    const firstDie = dies[0].value;
+    const allTheSame = dies.every(die => die.value == firstDie);
+    console.log(allTheSame, allIsHeld);
+
+    if (allIsHeld && allTheSame) setGameOver(true);
   }
 
-  const diceElements = dies.map(({ id, value, isHeld }) => (
-    <Die key={id} value={value} isHeld={isHeld} holdDice={() => holdDice(id)} />
-  ));
-
+  console.log('Appp re-rendered');
   return (
     <main>
-      {tenzies && <Confetti width={416} height={400} />}
+      {gameOver && <Confetti width={416} height={400} />}
       <h1 className="title">Tenzies Game</h1>
       <p className="instructions">
         Roll until all dice are the same. Click each die to freeze it at its
         current value between rolls.
       </p>
-      <div className="die-container">{diceElements}</div>
-      <button className="roll-btn" onClick={rollDice}>
-        {tenzies ? 'Rest Game' : 'Roll'}
+      <div className="die-container">{dies.map(die => <Die key={die.id} die={die} heldHandler={heldHandler} />)}</div>
+      <button className="roll-btn" onClick={rollHandler}>
+        {gameOver ? "Rest Game" : 'Roll'}
       </button>
       <div className="counter">{counter}</div>
     </main>

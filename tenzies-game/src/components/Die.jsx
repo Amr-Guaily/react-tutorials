@@ -1,7 +1,13 @@
-const Die = ({ value, isHeld, holdDice }) => {
+import { useEffect, useState } from 'react';
+
+const Die = ({ die, heldHandler }) => {
+  console.log('Die re-rendered');
   return (
-    <div className={`die ${isHeld ? 'held' : ''}`} onClick={holdDice}>
-      {value}
+    <div
+      className={`die ${die.isHeld && 'held'}`}
+      onClick={() => heldHandler(die.id)}
+    >
+      {die.value}
     </div>
   );
 };
