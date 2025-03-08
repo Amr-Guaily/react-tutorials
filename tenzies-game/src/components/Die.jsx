@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 const Die = ({ die, heldHandler }) => {
   console.log('Die re-rendered');
   return (

@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import Confetti from 'react-confetti';
+// import Confetti from 'react-confetti';
 import React, { useEffect, useState } from 'react';
 import Die from './components/Die';
 
@@ -49,15 +49,14 @@ const App = () => {
 
     const firstDie = dies[0].value;
     const allTheSame = dies.every(die => die.value == firstDie);
-    console.log(allTheSame, allIsHeld);
 
     if (allIsHeld && allTheSame) setGameOver(true);
   }
 
-  console.log('Appp re-rendered');
+  console.log('App re-rendered');
   return (
     <main>
-      {gameOver && <Confetti width={416} height={400} />}
+      {/* {gameOver && <Confetti width={416} height={400} />} */}
       <h1 className="title">Tenzies Game</h1>
       <p className="instructions">
         Roll until all dice are the same. Click each die to freeze it at its
